@@ -23,7 +23,8 @@ const Icons = {
   x: "M18 6L6 18M6 6l12 12",
   settings: "M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z",
   menu: "M3 12h18M3 6h18M3 18h18",
-  chevron: "M9 18l6-6-6-6",
+  chevronRight: "M9 18l6-6-6-6",
+  chevronLeft: "M15 18l-6-6 6-6",
   info: "M12 16v-4M12 8h.01M12 22a10 10 0 100-20 10 10 0 000 20z",
   target: "M12 22a10 10 0 100-20 10 10 0 000 20zM12 18a6 6 0 100-12 6 6 0 000 12zM12 14a2 2 0 100-4 2 2 0 000 4z",
   trending: "M23 6l-9.5 9.5-5-5L1 18",
@@ -31,8 +32,13 @@ const Icons = {
   eye: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 100 6 3 3 0 000-6z",
   code: "M16 18l6-6-6-6M8 6l-6 6 6 6",
   refresh: "M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15",
+  copy: "M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.91 4.895 3 6 3h8c1.105 0 2 .911 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.09 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z",
+  key: "M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4",
+  download: "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3",
+  reset: "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15",
+  warning: "M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01",
 };
-const Ic = ({ name, size, stroke, fill }) => <Icon d={Icons[name]} size={size} stroke={stroke} fill={fill} />;
+const Ic = ({ name, size, stroke, fill }) => <Icon d={Icons[name] || Icons.info} size={size} stroke={stroke} fill={fill} />;
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 function randomNormal(mean = 0, std = 1) {
@@ -177,7 +183,7 @@ const CSS = `
   .tab-pills { display: flex; gap: 4px; background: var(--bg); border-radius: 8px; padding: 3px; }
   .tab-pill {
     padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
-    cursor: pointer; color: var(--text2); transition: all 0.15s;
+    cursor: pointer; color: var(--text2); transition: all 0.15s; display: flex; align-items: center; gap: 6px;
   }
   .tab-pill.active { background: var(--surface2); color: var(--text); }
 
@@ -275,6 +281,14 @@ const CSS = `
     font-size: 11px; color: var(--text2); font-family: var(--mono);
     margin-top: 10px; border: 1px solid var(--border2); border-bottom: none;
   }
+  .code-header-actions { display: flex; align-items: center; gap: 8px; }
+  .copy-btn {
+    background: none; border: none; cursor: pointer; color: var(--text2);
+    font-family: var(--mono); font-size: 11px; padding: 2px 6px;
+    border-radius: 4px; transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+  }
+  .copy-btn:hover { background: var(--surface3); color: var(--accent); }
+  .copy-btn.copied { color: var(--accent); }
   .code-block {
     background: var(--bg); border: 1px solid var(--border2); border-top: none;
     border-radius: 0 0 6px 6px; padding: 12px; font-family: var(--mono);
@@ -300,6 +314,31 @@ const CSS = `
     outline: none; resize: none; transition: border-color 0.15s; min-height: 42px; max-height: 120px;
   }
   .chat-textarea:focus { border-color: var(--accent); }
+
+  /* SETTINGS MODAL */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center; z-index: 100;
+    animation: fadeIn 0.15s ease;
+  }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border2); border-radius: 14px;
+    padding: 28px; width: 480px; max-width: 95vw; box-shadow: var(--shadow);
+    animation: slideUp 0.2s ease;
+  }
+  .modal-title { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+  .modal-sub { font-size: 12px; color: var(--text2); margin-bottom: 20px; }
+  @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes slideUp { from { transform: translateY(12px); opacity: 0 } to { transform: none; opacity: 1 } }
+
+  /* API KEY STATUS */
+  .api-status {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px;
+  }
+  .api-status.ok { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+  .api-status.missing { background: rgba(240,180,41,0.1); color: var(--warn); border: 1px solid rgba(240,180,41,0.2); }
+  .api-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
   /* MONTE CARLO CHART */
   .mc-canvas { width: 100%; border-radius: 8px; background: var(--bg); }
@@ -356,7 +395,7 @@ const CSS = `
   /* TOGGLE */
   .toggle-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
   .toggle { width: 36px; height: 20px; background: var(--surface2); border-radius: 20px;
-    position: relative; transition: background 0.2s; flex-shrink: 0; }
+    position: relative; transition: background 0.2s; flex-shrink: 0; cursor: pointer; }
   .toggle.on { background: var(--accent); }
   .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px;
     background: white; border-radius: 50%; transition: transform 0.2s; }
@@ -417,6 +456,18 @@ const CSS = `
     border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--warn);
     display: flex; align-items: flex-start; gap: 8px;
   }
+  .error-box {
+    background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.2);
+    border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--danger);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+
+  /* JOURNAL INPUT GRID */
+  .pnl-input-row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  .pnl-input { background: var(--bg); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 7px 10px; color: var(--text); font-family: var(--mono); font-size: 13px;
+    outline: none; width: 120px; }
+  .pnl-input:focus { border-color: var(--accent); }
 
   @media (max-width: 900px) {
     .sidebar { width: 64px; min-width: 64px; }
@@ -427,6 +478,10 @@ const CSS = `
   @media (max-width: 600px) {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .content { padding: 16px; }
+    .topbar { padding: 0 16px; }
+    .chat-header { padding: 0 16px 12px; }
+    .chat-messages { padding: 0 16px; }
+    .chat-input-area { padding: 12px 16px; }
   }
 `;
 
@@ -442,19 +497,92 @@ const SAMPLE_TRADES = [
   { id: 8, date: "2025-05-07", symbol: "ES", side: "Long", entry: 5260, exit: 5250, contracts: 1, pnl: -500, duration: "12m" },
 ];
 
+// ─── LOCAL STORAGE HOOK ──────────────────────────────────────────────────────
+function useLocalStorage(key, defaultValue) {
+  const [value, setValue] = useState(() => {
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : defaultValue;
+    } catch { return defaultValue; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  }, [key, value]);
+  return [value, setValue];
+}
+
+// ─── SETTINGS MODAL ───────────────────────────────────────────────────────────
+function SettingsModal({ apiKey, setApiKey, onClose }) {
+  const [draft, setDraft] = useState(apiKey);
+  const [show, setShow] = useState(false);
+  const save = () => { setApiKey(draft.trim()); onClose(); };
+  return (
+    <div className="modal-backdrop" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="modal">
+        <div className="flex items-center justify-between mb-8">
+          <div className="modal-title">⚙️ Settings</div>
+          <button className="btn btn-secondary btn-sm" onClick={onClose}><Ic name="x" size={14} /></button>
+        </div>
+        <div className="modal-sub">Configure your API keys and preferences</div>
+
+        <div className="input-group">
+          <label className="input-label"><Ic name="key" size={12} /> Anthropic API Key</label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input
+              className="input"
+              type={show ? "text" : "password"}
+              placeholder="sk-ant-api03-..."
+              value={draft}
+              onChange={e => setDraft(e.target.value)}
+            />
+            <button className="btn btn-secondary btn-sm" onClick={() => setShow(s => !s)} style={{ whiteSpace: "nowrap" }}>
+              <Ic name="eye" size={14} /> {show ? "Hide" : "Show"}
+            </button>
+          </div>
+        </div>
+        <div className="tip-box mb-12">
+          <Ic name="info" size={14} />
+          <span>
+            Get your key at <strong>console.anthropic.com</strong>. The key is stored locally in your browser and never sent to any server except Anthropic's API.
+          </span>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button className="btn btn-primary" onClick={save}><Ic name="check" size={14} /> Save</button>
+          <button className="btn btn-secondary" onClick={onClose}><Ic name="x" size={14} /> Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── COPY BUTTON ─────────────────────────────────────────────────────────────
+function CopyBtn({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+  return (
+    <button className={`copy-btn ${copied ? "copied" : ""}`} onClick={copy}>
+      <Ic name={copied ? "check" : "copy"} size={12} />
+      {copied ? "Copied!" : "Copy"}
+    </button>
+  );
+}
+
 // ─── AI CHAT MODULE ────────────────────────────────────────────────────────────
-function AIChat() {
+function AIChat({ apiKey, openSettings }) {
   const MODEL_OPTIONS = [
     { id: "claude-sonnet-4-20250514", label: "Claude Sonnet 4.6", provider: "anthropic" },
     { id: "claude-opus-4-20250514", label: "Claude Opus 4.6", provider: "anthropic" },
-    { id: "gpt-4o", label: "GPT-4o", provider: "openai" },
-    { id: "gemini-2.0-flash", label: "Gemini 2.0 Flash", provider: "google" },
   ];
 
+  const INITIAL_MSG = { role: "assistant", content: "Hey! I'm your AI trading assistant. I can write Pine Script strategies, analyze your setups, explain ICT concepts, or help with any trading question.\n\nTry: *\"Write a Pine Script v6 NQ strategy using SMT divergence and IFVG entries\"*" };
+
   const [model, setModel] = useState(MODEL_OPTIONS[0]);
-  const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hey! I'm your AI trading assistant. I can write Pine Script strategies, analyze your setups, explain ICT concepts, or help with any trading question.\n\nTry: *\"Write a Pine Script v6 NQ strategy using SMT divergence and IFVG entries\"*" }
-  ]);
+  const [messages, setMessages] = useState([INITIAL_MSG]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
@@ -471,7 +599,13 @@ function AIChat() {
         const code = nl > -1 ? inner.slice(nl + 1) : inner;
         return (
           <div key={i}>
-            <div className="code-header"><span>{lang || "pinescript"}</span><span style={{ opacity: 0.6 }}>Pine Script v6</span></div>
+            <div className="code-header">
+              <span>{lang || "pinescript"}</span>
+              <div className="code-header-actions">
+                <span style={{ opacity: 0.6, fontSize: 10, marginRight: 4 }}>Pine Script v6</span>
+                <CopyBtn text={code} />
+              </div>
+            </div>
             <div className="code-block">{code}</div>
           </div>
         );
@@ -483,9 +617,11 @@ function AIChat() {
 
   const send = async () => {
     if (!input.trim() || loading) return;
+    if (!apiKey) { openSettings(); return; }
     const userMsg = input.trim();
     setInput("");
-    setMessages(prev => [...prev, { role: "user", content: userMsg }]);
+    const newMessages = [...messages, { role: "user", content: userMsg }];
+    setMessages(newMessages);
     setLoading(true);
 
     const systemPrompt = `You are an expert algorithmic trading assistant specializing in Pine Script v6, ICT concepts (SMT, IFVG, CISD, liquidity sweeps), NQ/ES futures, and prop firm trading strategies. When writing Pine Script, always use v6 syntax and include proper strategy() or indicator() calls. Format code blocks with triple backticks and 'pinescript' as the language label.`;
@@ -493,31 +629,32 @@ function AIChat() {
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-calls": "true",
+        },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
+          model: model.id,
+          max_tokens: 4096,
           system: systemPrompt,
-          messages: [
-            ...messages.filter(m => m.role !== "assistant" || messages.indexOf(m) > 0).map(m => ({
-              role: m.role, content: m.content
-            })),
-            { role: "user", content: userMsg }
-          ]
+          messages: newMessages.filter(m => m.role !== "assistant" || newMessages.indexOf(m) > 0).map(m => ({
+            role: m.role, content: m.content
+          }))
         })
       });
       const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
       const reply = data.content?.[0]?.text || "Sorry, I couldn't process that.";
-      setMessages(prev => [...prev, {
-        role: "assistant",
-        content: reply,
-        model: model.label
-      }]);
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "⚠️ Connection error. Check API key in settings." }]);
+      setMessages(prev => [...prev, { role: "assistant", content: reply, model: model.label }]);
+    } catch (err) {
+      setMessages(prev => [...prev, { role: "assistant", content: `⚠️ Error: ${err.message || "Connection failed. Check your API key in Settings."}` }]);
     }
     setLoading(false);
   };
+
+  const clearChat = () => setMessages([INITIAL_MSG]);
 
   const quickPrompts = [
     "Write NQ SMT + IFVG Pine Script v6",
@@ -529,8 +666,29 @@ function AIChat() {
   return (
     <div className="chat-wrap">
       <div className="chat-header">
-        <div className="section-title">AI Strategy Builder</div>
-        <div className="section-sub">Write Pine Script, analyze setups, learn ICT — powered by leading AI models</div>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="section-title">AI Strategy Builder</div>
+            <div className="section-sub" style={{ marginBottom: 12 }}>Write Pine Script, analyze setups, learn ICT — powered by Claude</div>
+          </div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {!apiKey && (
+              <div className="api-status missing">
+                <div className="api-dot" />
+                No API Key
+              </div>
+            )}
+            {apiKey && (
+              <div className="api-status ok">
+                <div className="api-dot" />
+                API Connected
+              </div>
+            )}
+            <button className="btn btn-secondary btn-sm" onClick={clearChat} title="Clear chat">
+              <Ic name="refresh" size={14} /> New Chat
+            </button>
+          </div>
+        </div>
         <div className="chat-model-bar">
           {MODEL_OPTIONS.map(m => (
             <div key={m.id} className={`model-chip ${model.id === m.id ? "active" : ""}`} onClick={() => setModel(m)}>
@@ -539,6 +697,21 @@ function AIChat() {
           ))}
         </div>
       </div>
+
+      {!apiKey && (
+        <div style={{ padding: "0 24px 8px" }}>
+          <div className="tip-box">
+            <Ic name="key" size={14} />
+            <span>
+              An Anthropic API key is required to use the AI builder.{" "}
+              <strong style={{ cursor: "pointer", textDecoration: "underline" }} onClick={openSettings}>
+                Click here to add your key →
+              </strong>
+            </span>
+          </div>
+        </div>
+      )}
+
       <div className="chat-messages">
         {messages.map((msg, i) => (
           <div key={i} className={`msg ${msg.role === "user" ? "user" : ""}`}>
@@ -563,10 +736,11 @@ function AIChat() {
         )}
         <div ref={bottomRef} />
       </div>
+
       {messages.length <= 1 && (
         <div style={{ padding: "0 24px 12px", display: "flex", gap: 8, flexWrap: "wrap" }}>
           {quickPrompts.map(p => (
-            <button key={p} className="btn btn-secondary btn-sm" onClick={() => { setInput(p); }}>
+            <button key={p} className="btn btn-secondary btn-sm" onClick={() => setInput(p)}>
               {p}
             </button>
           ))}
@@ -576,11 +750,12 @@ function AIChat() {
         <div className="chat-input-row">
           <textarea
             className="chat-textarea"
-            placeholder="Ask anything about trading, Pine Script, ICT concepts..."
+            placeholder={apiKey ? "Ask anything about trading, Pine Script, ICT concepts..." : "Add API key in Settings to start chatting..."}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
             rows={1}
+            disabled={loading}
           />
           <button className="btn btn-primary" onClick={send} disabled={loading || !input.trim()}>
             <Ic name="send" size={16} />
@@ -593,18 +768,21 @@ function AIChat() {
 }
 
 // ─── MONTE CARLO MODULE ────────────────────────────────────────────────────────
+const DEFAULT_MC_PARAMS = {
+  winRate: 55, rr: 1.5, riskPerTrade: 500, totalTrades: 300,
+  tradesPerDay: 3, variance: 35, propFirmRules: true,
+  accountSize: 50000, dailyLoss: 2500, maxDD: 2500
+};
+
 function QuantLab() {
-  const [params, setParams] = useState({
-    winRate: 55, rr: 1.5, riskPerTrade: 500, totalTrades: 300,
-    tradesPerDay: 3, variance: 35, propFirmRules: true,
-    accountSize: 50000, dailyLoss: 2500, maxDD: 2500
-  });
+  const [params, setParams] = useState(DEFAULT_MC_PARAMS);
   const [results, setResults] = useState(null);
   const [running, setRunning] = useState(false);
   const canvasRef = useRef(null);
 
   const p = (key) => (val) => setParams(prev => ({ ...prev, [key]: parseFloat(val) || val }));
   const toggle = (key) => setParams(prev => ({ ...prev, [key]: !prev[key] }));
+  const resetParams = () => { setParams(DEFAULT_MC_PARAMS); setResults(null); };
 
   const run = () => {
     setRunning(true);
@@ -632,7 +810,6 @@ function QuantLab() {
 
     ctx.clearRect(0, 0, W, H);
 
-    // Grid
     ctx.strokeStyle = "#21262d";
     ctx.lineWidth = 1;
     for (let i = 0; i <= 4; i++) {
@@ -640,7 +817,6 @@ function QuantLab() {
       ctx.beginPath(); ctx.moveTo(20, y); ctx.lineTo(W - 20, y); ctx.stroke();
     }
 
-    // Zero line
     if (minV < 0 && maxV > 0) {
       ctx.strokeStyle = "#484f58"; ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
@@ -649,7 +825,6 @@ function QuantLab() {
       ctx.setLineDash([]);
     }
 
-    // Paths
     const step = Math.max(1, Math.floor(results.results.length / 80));
     results.results.forEach((r, idx) => {
       if (idx % step !== 0) return;
@@ -663,25 +838,53 @@ function QuantLab() {
       ctx.stroke();
     });
 
-    // Median
     const medIdx = Math.floor(results.results.length / 2);
-    ctx.strokeStyle = "var(--accent)"; ctx.lineWidth = 2;
+    ctx.strokeStyle = "#00ff88"; ctx.lineWidth = 2;
     ctx.beginPath();
     results.results[medIdx].curve.forEach((v, t) => {
       const x = toX(t, results.results[medIdx].curve.length); const y = toY(v);
       t === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.stroke();
-
   }, [results]);
 
   const fmt = (n) => n >= 0 ? `+$${n.toLocaleString()}` : `-$${Math.abs(n).toLocaleString()}`;
 
+  const exportResults = () => {
+    if (!results) return;
+    const rows = [
+      ["Metric", "Value"],
+      ["Median (P50)", fmt(results.p50)],
+      ["Best Case (P90)", fmt(results.p90)],
+      ["Worst Case (P10)", fmt(results.p10)],
+      ["Average", fmt(Math.round(results.avg))],
+      ["Pass Rate", `${((results.passed / results.paths) * 100).toFixed(1)}%`],
+      ["Blow-Up Rate", `${((results.busted / results.paths) * 100).toFixed(1)}%`],
+      ["", ""],
+      ["Parameters", ""],
+      ["Win Rate", `${params.winRate}%`],
+      ["R:R", params.rr],
+      ["Risk / Trade", `$${params.riskPerTrade}`],
+      ["Total Trades", params.totalTrades],
+    ];
+    const csv = rows.map(r => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "tradeforge_simulation.csv";
+    a.click();
+  };
+
   return (
     <div className="gap-16">
-      <div>
-        <div className="section-title">Quant Lab</div>
-        <div className="section-sub">Monte Carlo simulation with prop firm rules — 500 randomized paths</div>
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="section-title">Quant Lab</div>
+          <div className="section-sub">Monte Carlo simulation with prop firm rules — 500 randomized paths</div>
+        </div>
+        <button className="btn btn-secondary btn-sm" onClick={resetParams}>
+          <Ic name="reset" size={14} /> Reset
+        </button>
       </div>
 
       <div className="grid-2" style={{ gap: 24 }}>
@@ -787,7 +990,12 @@ function QuantLab() {
                 </div>
               )}
               <div className="card">
-                <div className="card-title">Equity Curve Distribution</div>
+                <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+                  <div className="card-title" style={{ marginBottom: 0 }}>Equity Curve Distribution</div>
+                  <button className="btn btn-secondary btn-sm" onClick={exportResults}>
+                    <Ic name="download" size={13} /> Export CSV
+                  </button>
+                </div>
                 <canvas ref={canvasRef} className="mc-canvas" style={{ height: 260 }} />
                 <div style={{ display: "flex", gap: 16, marginTop: 10, fontSize: 11, color: "var(--text2)" }}>
                   <span><span style={{ color: "var(--accent)" }}>─</span> Median path</span>
@@ -815,40 +1023,61 @@ function QuantLab() {
 function StrategyAnalysis() {
   const [trades, setTrades] = useState(null);
   const [drag, setDrag] = useState(false);
+  const [error, setError] = useState(null);
 
   const parseCSV = (text) => {
-    const lines = text.trim().split("\n");
+    const lines = text.trim().split("\n").filter(l => l.trim());
     if (lines.length < 2) return null;
     const headers = lines[0].split(",").map(h => h.trim().replace(/"/g, "").toLowerCase());
-    return lines.slice(1).map((line, idx) => {
-      const vals = line.split(",").map(v => v.trim().replace(/"/g, ""));
+    const parsed = lines.slice(1).map((line, idx) => {
+      // Handle quoted fields with commas inside
+      const vals = [];
+      let current = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        if (line[i] === '"') { inQuotes = !inQuotes; continue; }
+        if (line[i] === "," && !inQuotes) { vals.push(current.trim()); current = ""; continue; }
+        current += line[i];
+      }
+      vals.push(current.trim());
+
       const obj = {};
-      headers.forEach((h, i) => obj[h] = vals[i]);
-      const pnl = parseFloat(obj["profit"] || obj["pnl"] || obj["net profit"] || obj["net pnl"] || "0");
+      headers.forEach((h, i) => { obj[h] = vals[i] || ""; });
+
+      const pnl = parseFloat(
+        obj["profit"] || obj["pnl"] || obj["net profit"] || obj["net pnl"] ||
+        obj["profit $"] || obj["p&l"] || obj["realized p&l"] || "0"
+      );
       return {
         id: idx + 1,
-        date: obj["date"] || obj["entry time"] || `Trade ${idx + 1}`,
-        symbol: obj["symbol"] || obj["market"] || "NQ",
-        side: obj["type"] || obj["direction"] || obj["side"] || "—",
-        entry: parseFloat(obj["entry price"] || obj["entry"] || "0"),
-        exit: parseFloat(obj["exit price"] || obj["exit"] || "0"),
-        contracts: parseInt(obj["qty"] || obj["contracts"] || obj["quantity"] || "1"),
+        date: obj["date"] || obj["entry time"] || obj["open time"] || `Trade ${idx + 1}`,
+        symbol: obj["symbol"] || obj["market"] || obj["instrument"] || "NQ",
+        side: obj["type"] || obj["direction"] || obj["side"] || obj["trade type"] || "—",
+        entry: parseFloat(obj["entry price"] || obj["entry"] || obj["open"] || "0") || "—",
+        exit: parseFloat(obj["exit price"] || obj["exit"] || obj["close"] || "0") || "—",
+        contracts: parseInt(obj["qty"] || obj["contracts"] || obj["quantity"] || obj["size"] || "1") || 1,
         pnl,
-        duration: obj["duration"] || obj["time in trade"] || "—",
+        duration: obj["duration"] || obj["time in trade"] || obj["bars"] || "—",
       };
     }).filter(t => !isNaN(t.pnl));
+    return parsed.length > 0 ? parsed : null;
   };
 
   const handleFile = (file) => {
+    setError(null);
     const reader = new FileReader();
     reader.onload = (e) => {
       const parsed = parseCSV(e.target.result);
-      setTrades(parsed?.length ? parsed : SAMPLE_TRADES);
+      if (!parsed) {
+        setError("Could not parse this CSV. Make sure TradingView is set to English before exporting.");
+        return;
+      }
+      setTrades(parsed);
     };
     reader.readAsText(file);
   };
 
-  const useSample = () => setTrades(SAMPLE_TRADES);
+  const useSample = () => { setTrades(SAMPLE_TRADES); setError(null); };
 
   const stats = trades ? (() => {
     const wins = trades.filter(t => t.pnl > 0);
@@ -869,7 +1098,7 @@ function StrategyAnalysis() {
     return {
       total: trades.length, wins: wins.length, losses: losses.length,
       winRate: ((wins.length / trades.length) * 100).toFixed(1),
-      totalPnl, avgWin, avgLoss,
+      totalPnl, avgWin: avgWin.toFixed(0), avgLoss: avgLoss.toFixed(0),
       profitFactor: avgLoss > 0 ? (avgWin / avgLoss).toFixed(2) : "∞",
       maxDD, bestStreak, worstStreak: Math.abs(worstStreak),
     };
@@ -889,12 +1118,18 @@ function StrategyAnalysis() {
             onDragOver={e => { e.preventDefault(); setDrag(true); }}
             onDragLeave={() => setDrag(false)}
             onDrop={e => { e.preventDefault(); setDrag(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
-            onClick={() => { const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".csv,.htm,.html"; inp.onchange = e => handleFile(e.target.files[0]); inp.click(); }}
+            onClick={() => { const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".csv,.htm,.html,.txt"; inp.onchange = e => handleFile(e.target.files[0]); inp.click(); }}
           >
             <div className="file-drop-icon"><Ic name="upload" size={40} /></div>
             <div className="file-drop-title">Drop your trade history CSV here</div>
             <div className="file-drop-sub">Supports TradingView · NinjaTrader · MT4/MT5 · Any CSV format</div>
           </div>
+          {error && (
+            <div className="error-box mt-12">
+              <Ic name="warning" size={14} />
+              <span>{error}</span>
+            </div>
+          )}
           <div className="tip-box mt-12">
             <Ic name="info" size={14} />
             <span>Make sure TradingView is set to <strong>English</strong> before exporting. Hebrew UI may cause parse errors.</span>
@@ -906,21 +1141,23 @@ function StrategyAnalysis() {
           <div className="grid-4">
             <div className="stat-card"><div className="stat-label">Total PnL</div><div className={`stat-value ${stats.totalPnl >= 0 ? "green" : "red"}`}>{stats.totalPnl >= 0 ? "+" : ""}${stats.totalPnl.toLocaleString()}</div><div className="stat-sub">{stats.total} trades</div></div>
             <div className="stat-card"><div className="stat-label">Win Rate</div><div className={`stat-value ${stats.winRate >= 50 ? "green" : "orange"}`}>{stats.winRate}%</div><div className="stat-sub">{stats.wins}W / {stats.losses}L</div></div>
-            <div className="stat-card"><div className="stat-label">Profit Factor</div><div className={`stat-value ${parseFloat(stats.profitFactor) >= 1.5 ? "green" : "orange"}`}>{stats.profitFactor}</div><div className="stat-sub">Avg win / avg loss</div></div>
-            <div className="stat-card"><div className="stat-label">Max Drawdown</div><div className="stat-value red">${stats.maxDD.toLocaleString()}</div><div className="stat-sub">Best streak: {stats.bestStreak}</div></div>
+            <div className="stat-card"><div className="stat-label">Profit Factor</div><div className={`stat-value ${parseFloat(stats.profitFactor) >= 1.5 ? "green" : "orange"}`}>{stats.profitFactor}</div><div className="stat-sub">Avg W: ${stats.avgWin} / Avg L: ${stats.avgLoss}</div></div>
+            <div className="stat-card"><div className="stat-label">Max Drawdown</div><div className="stat-value red">${stats.maxDD.toLocaleString()}</div><div className="stat-sub">Best streak: {stats.bestStreak} · Worst: {stats.worstStreak}</div></div>
           </div>
 
           <div className="card">
             <div className="flex items-center justify-between mb-12">
-              <div className="card-title" style={{ marginBottom: 0 }}>Trade Log</div>
-              <button className="btn btn-secondary btn-sm" onClick={() => setTrades(null)}><Ic name="refresh" size={14} /> New Upload</button>
+              <div className="card-title" style={{ marginBottom: 0 }}>Trade Log ({trades.length} trades)</div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button className="btn btn-secondary btn-sm" onClick={() => setTrades(null)}><Ic name="refresh" size={14} /> New Upload</button>
+              </div>
             </div>
             <div style={{ overflow: "auto", maxHeight: 380 }}>
               <table className="trade-table">
                 <thead>
                   <tr>
                     <th>#</th><th>Date</th><th>Symbol</th><th>Side</th>
-                    <th>Entry</th><th>Exit</th><th>Contracts</th><th>Duration</th><th>PnL</th>
+                    <th>Entry</th><th>Exit</th><th>Qty</th><th>Duration</th><th>PnL</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -930,8 +1167,8 @@ function StrategyAnalysis() {
                       <td>{t.date}</td>
                       <td><span className="badge badge-gray">{t.symbol}</span></td>
                       <td><span className={`badge ${t.side?.toLowerCase().includes("long") || t.side?.toLowerCase().includes("buy") ? "badge-green" : "badge-red"}`}>{t.side}</span></td>
-                      <td className="text-mono">{t.entry || "—"}</td>
-                      <td className="text-mono">{t.exit || "—"}</td>
+                      <td className="text-mono">{t.entry}</td>
+                      <td className="text-mono">{t.exit}</td>
                       <td className="text-mono">{t.contracts}</td>
                       <td className="text-muted">{t.duration}</td>
                       <td className={t.pnl >= 0 ? "profit" : "loss"}>{t.pnl >= 0 ? "+" : ""}${t.pnl.toLocaleString()}</td>
@@ -950,14 +1187,16 @@ function StrategyAnalysis() {
 // ─── TRADING JOURNAL MODULE ────────────────────────────────────────────────────
 function TradingJournal() {
   const [tab, setTab] = useState("challenges");
-  const [challenges, setChallenges] = useState([
+  const [challenges, setChallenges] = useLocalStorage("tf_challenges", [
     { id: 1, firm: "Apex Trader Funding", size: 50000, target: 3000, pnl: 1840, dailyLoss: 2500, maxDD: 2500, status: "active", phase: "Challenge", trades: 12, startDate: "2025-05-01" },
     { id: 2, firm: "Topstep", size: 50000, target: 3000, pnl: -1200, dailyLoss: 1000, maxDD: 2000, status: "failed", phase: "Challenge", trades: 7, startDate: "2025-04-15" },
   ]);
-  const [funded, setFunded] = useState([
+  const [funded, setFunded] = useLocalStorage("tf_funded", [
     { id: 1, firm: "Apex Trader Funding", size: 150000, pnl: 4200, maxDD: 4500, status: "active", trades: 34, startDate: "2025-03-01" },
   ]);
   const [showAdd, setShowAdd] = useState(false);
+  const [showPnl, setShowPnl] = useState(null); // id of card being updated
+  const [pnlDraft, setPnlDraft] = useState("");
   const [form, setForm] = useState({ firm: "", size: "50000", target: "3000", dailyLoss: "2500", maxDD: "2500", phase: "Challenge" });
 
   const addAccount = () => {
@@ -975,16 +1214,33 @@ function TradingJournal() {
     setForm({ firm: "", size: "50000", target: "3000", dailyLoss: "2500", maxDD: "2500", phase: "Challenge" });
   };
 
+  const updatePnl = (id, delta) => {
+    const update = list => list.map(a => a.id === id ? {
+      ...a,
+      pnl: a.pnl + delta,
+      trades: a.trades + 1,
+      status: a.target && (a.pnl + delta) >= a.target ? "passed"
+        : a.maxDD && (a.pnl + delta) <= -(a.maxDD) ? "failed"
+        : "active"
+    } : a);
+    if (tab === "challenges") setChallenges(update);
+    else setFunded(update);
+    setShowPnl(null);
+    setPnlDraft("");
+  };
+
   const statusBadge = (s) => {
     if (s === "active") return <span className="badge badge-green">Active</span>;
     if (s === "failed") return <span className="badge badge-red">Failed</span>;
-    if (s === "passed") return <span className="badge badge-blue">Passed</span>;
+    if (s === "passed") return <span className="badge badge-blue">Passed ✓</span>;
     return <span className="badge badge-gray">{s}</span>;
   };
 
   const ChallengeCard = ({ acc, onDelete }) => {
     const progress = acc.target ? Math.max(0, Math.min(100, (acc.pnl / acc.target) * 100)) : 0;
     const ddUsed = acc.pnl < 0 ? Math.min(100, (Math.abs(acc.pnl) / acc.maxDD) * 100) : 0;
+    const isEditing = showPnl === acc.id;
+
     return (
       <div className={`challenge-card ${acc.status}`}>
         <div className="flex items-center justify-between mb-4">
@@ -999,6 +1255,7 @@ function TradingJournal() {
             </button>
           </div>
         </div>
+
         {acc.target && (
           <div>
             <div className="flex justify-between text-xs text-muted mb-4">
@@ -1025,6 +1282,32 @@ function TradingJournal() {
           <div><div className="text-xs text-muted">Daily Limit</div><div className="text-mono font-bold mt-4">${acc.dailyLoss?.toLocaleString()}</div></div>
           <div><div className="text-xs text-muted">Max DD</div><div className="text-mono font-bold mt-4">${acc.maxDD?.toLocaleString()}</div></div>
         </div>
+        {/* LOG TRADE PNL */}
+        <hr className="divider" />
+        {isEditing ? (
+          <div className="pnl-input-row">
+            <input
+              className="pnl-input"
+              type="number"
+              placeholder="Trade PnL ($)"
+              value={pnlDraft}
+              onChange={e => setPnlDraft(e.target.value)}
+              autoFocus
+              onKeyDown={e => { if (e.key === "Enter") { const v = parseFloat(pnlDraft); if (!isNaN(v)) updatePnl(acc.id, v); } }}
+            />
+            <button className="btn btn-primary btn-sm" onClick={() => { const v = parseFloat(pnlDraft); if (!isNaN(v)) updatePnl(acc.id, v); }}>
+              <Ic name="check" size={13} /> Log
+            </button>
+            <button className="btn btn-secondary btn-sm" onClick={() => { setShowPnl(null); setPnlDraft(""); }}>
+              <Ic name="x" size={13} />
+            </button>
+          </div>
+        ) : (
+          <button className="btn btn-secondary btn-sm" style={{ width: "100%", justifyContent: "center" }}
+            onClick={() => setShowPnl(acc.id)}>
+            <Ic name="plus" size={13} /> Log Trade
+          </button>
+        )}
       </div>
     );
   };
@@ -1037,9 +1320,9 @@ function TradingJournal() {
       <div className="flex items-center justify-between">
         <div>
           <div className="section-title">Trading Journal</div>
-          <div className="section-sub">Track prop firm challenges and funded accounts</div>
+          <div className="section-sub">Track prop firm challenges and funded accounts — saved automatically</div>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowAdd(true)}><Ic name="plus" size={14} /> New Account</button>
+        <button className="btn btn-primary" onClick={() => setShowAdd(s => !s)}><Ic name="plus" size={14} /> New Account</button>
       </div>
 
       <div className="tab-pills" style={{ alignSelf: "flex-start" }}>
@@ -1144,7 +1427,7 @@ function Dashboard({ setPage }) {
                 <span className={`badge ${t.pnl >= 0 ? "badge-green" : "badge-red"}`}>{t.side}</span>
                 <span style={{ color: "var(--text2)" }}>{t.symbol} · {t.date}</span>
               </div>
-              <span className={`text-mono font-bold ${t.pnl >= 0 ? "" : ""}`} style={{ color: t.pnl >= 0 ? "var(--accent)" : "var(--danger)" }}>
+              <span className="text-mono font-bold" style={{ color: t.pnl >= 0 ? "var(--accent)" : "var(--danger)" }}>
                 {t.pnl >= 0 ? "+" : ""}${t.pnl.toLocaleString()}
               </span>
             </div>
@@ -1176,6 +1459,8 @@ function Dashboard({ setPage }) {
 export default function App() {
   const [page, setPage] = useState("dashboard");
   const [collapsed, setCollapsed] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [apiKey, setApiKey] = useLocalStorage("tf_api_key", "");
 
   const navItems = [
     { id: "dashboard", icon: "zap", label: "Dashboard" },
@@ -1193,6 +1478,9 @@ export default function App() {
   return (
     <>
       <style>{CSS}</style>
+      {showSettings && (
+        <SettingsModal apiKey={apiKey} setApiKey={setApiKey} onClose={() => setShowSettings(false)} />
+      )}
       <div className="app">
         <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
           <div className="logo">
@@ -1210,8 +1498,14 @@ export default function App() {
               </div>
             ))}
           </nav>
+          {/* Settings nav item */}
+          <div className="nav-item" style={{ margin: "0 8px 8px" }} onClick={() => setShowSettings(true)}>
+            <span className="nav-icon"><Ic name="settings" size={18} /></span>
+            <span>Settings</span>
+            {!apiKey && <span className="nav-badge" style={{ background: "var(--warn)", color: "#000" }}>!</span>}
+          </div>
           <div className="collapse-btn" onClick={() => setCollapsed(c => !c)}>
-            <Ic name={collapsed ? "chevron" : "chevron"} size={16} />
+            <Ic name={collapsed ? "chevronRight" : "chevronLeft"} size={16} />
           </div>
         </aside>
 
@@ -1221,15 +1515,25 @@ export default function App() {
               {pageTitle[page]}
               <span>TradeForge</span>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 6px var(--accent)" }} />
-              <span style={{ fontSize: 12, color: "var(--text2)" }}>NQ Futures · UTC+3</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {!apiKey && (
+                <button className="btn btn-secondary btn-sm" onClick={() => setShowSettings(true)} style={{ borderColor: "var(--warn)", color: "var(--warn)" }}>
+                  <Ic name="key" size={13} /> Add API Key
+                </button>
+              )}
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 6px var(--accent)" }} />
+                <span style={{ fontSize: 12, color: "var(--text2)" }}>NQ · UTC+3</span>
+              </div>
+              <button className="btn btn-secondary btn-sm" onClick={() => setShowSettings(true)} title="Settings">
+                <Ic name="settings" size={14} />
+              </button>
             </div>
           </div>
 
           {page === "ai" ? (
             <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-              <AIChat />
+              <AIChat apiKey={apiKey} openSettings={() => setShowSettings(true)} />
             </div>
           ) : (
             <div className="content">
